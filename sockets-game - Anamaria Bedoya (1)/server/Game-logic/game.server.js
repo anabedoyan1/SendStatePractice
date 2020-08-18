@@ -122,10 +122,25 @@ function setAxis(id, axis){
     axes[id] = axis;
 }
 function spawnCoin() {   
+    let limit;
+    if(STATE.pacman){
+        limit = 2;
+    }
+    else 
+    {
+        limit = 3;
+    }
+    let amount = Math.floor(Math.random() * limit + 1);    
     if(STATE.coins.length <=50){
-        let newCoin = new Coin;
-        STATE.coins.push(newCoin);
-    }   
+        for (let i = 0; i < amount; i++) {
+            let newCoin = new Coin;
+            STATE.coins.push(newCoin);        
+        }
+    }
+    // if(STATE.coins.length <=50){
+    //     let newCoin = new Coin;
+    //     STATE.coins.push(newCoin);
+    // }   
 }
 function spawnPowerUP() {   
     const pacman = STATE.players.find((player) => player.pacman == true);
@@ -161,11 +176,13 @@ const PacmanTime = (player) =>
 {           
     const normalsize = player.radius;
     if(player.pacman){
-        player.radius += 10;        
+        player.radius += 10;
+        player.speed += 0.3;        
         setTimeout(function()
         {
             player.pacman = false;
-            player.radius = normalsize;             
+            player.radius = normalsize; 
+            player.speed = playerSpeedBase;            
         }, PACMAN_TIME);
     }     
 }
@@ -240,7 +257,7 @@ const update = () => {
             }); 
             
             if(pacman)
-            {                
+            {     
                 STATE.coins.forEach((coin)=>{ coin.booster = true});
                 if(pacman.eat(player) && !player.pacman && !player.eaten)
                 {
@@ -250,7 +267,7 @@ const update = () => {
                 }
             }
             else
-            {
+            {                
                 STATE.coins.forEach((coin)=>{ coin.booster = false});
                 player.eaten = false;
             }
@@ -270,7 +287,7 @@ const removePlayer = (id, username) => {
 }
 
 setInterval(update, LOOP_PERIOD);
-setInterval(spawnCoin, Math.floor(Math.random() * 3000) + 1000);
+setInterval(spawnCoin, Math.floor(Math.random() * 2000) + 1000);
 setInterval(spawnPowerUP, pacmanPowerUPtime);
 
 module.exports= 
