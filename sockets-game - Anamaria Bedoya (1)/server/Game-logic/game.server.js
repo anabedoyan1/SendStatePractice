@@ -124,7 +124,7 @@ function setAxis(id, axis){
 function spawnCoin() {   
     let limit;
     if(STATE.pacman){
-        limit = 2;
+        limit = 1;
     }
     else 
     {
