@@ -177,7 +177,7 @@ const PacmanTime = (player) =>
     const normalsize = player.radius;
     if(player.pacman){
         player.radius += 10;
-        player.speed += 0.3;        
+        player.speed += 0.17;        
         setTimeout(function()
         {
             player.pacman = false;
